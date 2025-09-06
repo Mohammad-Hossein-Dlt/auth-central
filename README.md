@@ -16,6 +16,12 @@ REDIS_PASSWORD = ""
 
 ```
 
+To Run
+
+```
+fastapi dev .\src\main.py
+```
+
 ## App architecture description
 
 ### Infra Layer
