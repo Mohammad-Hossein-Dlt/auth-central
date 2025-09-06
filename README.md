@@ -2,6 +2,8 @@
 
 ENV File Parameters
 
+Put it next to the src
+
 ```
 # Base URL of the authentication service
 BASE_URL = "https://auth-central-challange.vercel.app"
