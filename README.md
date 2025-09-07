@@ -226,10 +226,8 @@ In the **SQL database**, the `device_id` is stored along with the rest of the in
 
 **Example (SQL schema):**
 
-```
-| id | device_id (UUID)                 | email            | access_token    | access_expiry                    | refresh_token   | refresh_expiry                   | token_type |
-|  1 | e8fbab2370f64befb83f2ec62ffc6055 | sample@gmail.com | eyJhbGciOiJI... | 2025-09-06 19:01:45.165131+00:00 | eyJhbGciOiJI... | 2025-09-06 19:03:45.165131+00:00 | bearer     |
-```
+| id | device_id (UUID) | email | access_token | access_expiry | refresh_token | refresh_expiry | token_type |
+| 1 | e8fbab2370f64befb83f2ec62ffc6055 | sample@gmail.com | eyJhbGciOiJI... | 2025-09-06 19:01:45.165131+00:00 | eyJhbGciOiJI... | 2025-09-06 19:03:45.165131+00:00 | bearer |
 
 Immediately after saving the information in the database, the `device_id` is stored in the user’s cookies as a **session-type cookie**.
 
