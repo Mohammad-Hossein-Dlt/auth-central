@@ -11,7 +11,7 @@ BASE_URL = "https://auth-central-challange.vercel.app"
 # Database stack to use for token storage: sqlite (development) | redis (production)
 AUTH_DB_STACK = "sqlite"
 
-# Redis configuration (used only if AUTH_DB_STACK=redis)
+# Redis configuration (used only if AUTH_DB_STACK = redis)
 REDIS_HOST = ""
 REDIS_PORT = 12345
 REDIS_PASSWORD = ""
@@ -38,13 +38,6 @@ In this layer, the application infrastructure is defined, such as:
   - load whith pydantic_settings
 - Services for interacting with external APIs
   - include interfaces and their implementation
-  ```
-  external_api/
-  ├─ interface/
-  │  └── <files...>
-  └─ service/
-     └── <files...>
-  ```
 - Errors related to this layer and other layers
   - include status code and message
 - Database and its models (tables)
@@ -53,7 +46,6 @@ In this layer, the application infrastructure is defined, such as:
 ```
 infra/
 ├── db/
-│   │
 │   ├── redis/
 │   │   └── <files or directories...>
 │   │
@@ -61,11 +53,9 @@ infra/
 │       └── <files or directories...>
 │
 ├── exception/
-│   │
 │   └── <files...>
 │
 ├── external_api/
-│   │
 │   ├── interface/
 │   │   └── <files...>
 │   │
@@ -89,13 +79,13 @@ In this layer, data models are defined that are only used inside the application
 ```
 domain/
 └── schemas/
-    ├── <schema_name>/
+    ├── <schema_group_name>/
     │   └── <files...>
     │
-    ├── <schema_name>/
+    ├── <schema_group_name>/
     │   └── <files...>
     │
-    └── <schema_name>/
+    └── <schema_group_name>/
         └── <files...>
 ```
 
@@ -106,13 +96,13 @@ In this layer, data models are defined that are only used for receiving or sendi
 ```
 models/
 └── schemas/
-    ├── <schema_name>/
+    ├── <schema_group_name>/
     │   └── <files...>
     │
-    ├── <schema_name>/
+    ├── <schema_group_name>/
     │   └── <files...>
     │
-    └── <schema_name>/
+    └── <schema_group_name>/
         └── <files...>
 ```
 
@@ -125,10 +115,10 @@ Interfaces define the structure of database communication, so we can have multip
 
 ```
 repo/
-├─ interface/
-│  └── <files...>
-└─ <repo_implementation_name>/
-   └── <files...>
+├── interface/
+│   └── <files...>
+└── <implementation_name>/
+    └── <files...>
 ```
 
 Naming implementations can be based on:
@@ -137,24 +127,24 @@ Naming implementations can be based on:
 
 ```
 repo/
-├─ interface/
+├── interface/
 │   └── <files...>
-│─ sql/
-│  └── <files...>
-└─ nosql/
-   └── <files...>
+├── sql/
+│   └── <files...>
+└── nosql/
+    └── <files...>
 ```
 
 - **Storage name** — for example: `postgresql`, or `mongodb`.
 
 ```
 repo/
-├─ interface/
+├── interface/
 │   └── <files...>
-│─ postgresql/
-│  └── <files...>
-└─ mongodb/
-   └── <files...>
+├── postgresql/
+│   └── <files...>
+└── mongodb/
+    └── <files...>
 ```
 
 ### Routes Layer
@@ -163,9 +153,20 @@ In this layer, endpoints are defined along with their dependencies, response sta
 
 ```
 routes/
-├─ api_endpoints/
-│─ depends/
-└─ http_response/
+├── api_endpoints/
+│   ├── <endpoint_group_name>/
+│   │   └── <files...>
+│   │
+│   ├── <endpoint_group_name>/
+│   │   └── <files...>
+│   │
+│   └── main_router.py
+│
+├── depends/
+│   └── <files...>
+│
+└── http_response/
+    └── <files...>
 ```
 
 ### Usecase Layer
@@ -174,6 +175,18 @@ In this layer, the application’s business logic is defined.
 This layer acts as an important bridge between endpoints in the Routes layer, the database in the Repo layer, and external APIs in the Infra layer.
 
 One of the implementen logics is the token refresh mechanism.
+
+```
+usecase/
+├── <usecase_group_name>/
+│   └── <files...>
+│
+├── <usecase_group_name>/
+│   └── <files...>
+│
+└── <usecase_group_name>/
+    └── <files...>
+```
 
 #### Note
 
@@ -184,7 +197,10 @@ The layers are not limited to the mentioned items and can also include other rel
 After user registration, when logging in, the **access token**, **refresh token**, and **token type** are received from the auth server.
 These information, along with the user’s email and the `calculated expiration time` of the **access token** and **refresh token**, are stored in the database.
 
-When saving this information in the database, a **UUID** called `device_id` is generated as the access identifier and stored with the information in database.
+When saving this information in the database, a **UUID** is generated as the access identifier and stored with the information in database as `device_id`.
+
+The email is stored to let us delete all auth records at once if the user changes it later.
+The device_id is stored to allow multi-device login, manage tokens per device, show the list of logged-in devices, let the user log out from any device, and notify them of new logins to handle unauthorized access if needed.
 
 In **Redis**, the `device_id` is used as the `name`, and the other details are stored as key–value pairs.
 

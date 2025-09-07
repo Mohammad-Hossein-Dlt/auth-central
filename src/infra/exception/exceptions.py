@@ -1,11 +1,3 @@
-class UnhandledException(Exception):
-    
-    def __init__(self, status_code, message, original_exception: Exception):
-        self.status_code = status_code
-        self.message = message
-        self.original_exception = original_exception                
-        super().__init__(str(original_exception))
-
 class AppBaseException(Exception):
     """Base class for other custom exceptions."""
     
