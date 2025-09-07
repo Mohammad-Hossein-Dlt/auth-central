@@ -1,6 +1,6 @@
 from repo.interface.Iauth import IAuthRepo
 from routes.api_v1.protected._router import router
-from fastapi import HTTPException, Depends
+from fastapi import Depends, HTTPException
 from models.schemas.simple.simple_output import SimpleOutput
 from routes.depends.user_repo_depend import get_auth_repo
 from usecases.protected.get_protected import GetProtectedResource

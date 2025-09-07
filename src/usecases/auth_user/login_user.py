@@ -17,17 +17,11 @@ class LoginUser:
         response = self.auth_service.login_user(user_data)
         
         access_token, refresh_token, token_type = response["access_token"], response["refresh_token"], response["token_type"]
-        
-        now = datetime.now(timezone.utc)
-        access_expiry = now + timedelta(minutes=2)
-        refresh_expiry = now + timedelta(minutes=4)
-        
+
         user_auth_credentials = AuthCredentials(
             email=user_data.username,
             access_token=access_token,
-            access_expiry=access_expiry,
             refresh_token=refresh_token,
-            refresh_expiry=refresh_expiry,
             token_type=token_type,
         )
                     

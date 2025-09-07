@@ -38,6 +38,8 @@ class AuthService(IAuthService):
         user_data: UserLoginInput,
     ) -> dict:
         
+        print("///")
+        
         target_url = self.base_url + "/login"
         
         response = requests.post(target_url, data=user_data.model_dump())

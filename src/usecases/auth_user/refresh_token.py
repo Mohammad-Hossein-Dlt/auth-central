@@ -19,15 +19,10 @@ class RefreshToken:
         
         access_token, refresh_token = response["access_token"], response["refresh_token"]
         
-        now = datetime.now(timezone.utc)
-        access_expiry = now + timedelta(minutes=2)
-        refresh_expiry = now + timedelta(minutes=4)
-        
-        auth_credentials.access_token = access_token
-        auth_credentials.access_expiry = access_expiry
-        
+        auth_credentials.access_token = access_token        
         auth_credentials.refresh_token = refresh_token
-        auth_credentials.refresh_expiry = refresh_expiry
+        
+        auth_credentials.set_new_expiries()
         
         try:
             return self.auth_repo.save_user_auth_credentials(auth_credentials)

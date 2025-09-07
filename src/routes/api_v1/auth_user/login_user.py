@@ -1,5 +1,5 @@
 from ._router import router
-from fastapi import HTTPException, Depends
+from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from models.schemas.simple.simple_output import SimpleOutput
 from models.schemas.user.user_login_input import UserLoginInput

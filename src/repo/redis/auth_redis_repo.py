@@ -36,7 +36,7 @@ class AuthRedisRepo(IAuthRepo):
             },
         )
         
-        self.redis_client.expire(device_id, 4 * 60)
+        self.redis_client.expire(device_id, credentials.refresh_lifetime * 60)
         
         self.request.session["device_id"] = device_id
                                 

@@ -1,5 +1,5 @@
 from routes.api_v1.auth_user._router import router
-from fastapi import HTTPException, Depends
+from fastapi import Depends, HTTPException
 from models.schemas.simple.simple_output import SimpleOutput
 from models.schemas.user.user_register_input import UserRegisterInput
 from usecases.auth_user.register_user import RegisterUser
@@ -18,7 +18,7 @@ from routes.depends.external_api_services_depend import get_auth_service
     }
 )
 async def register_user(
-    user_data: UserRegisterInput = Depends(UserRegisterInput),
+    user_data: UserRegisterInput,
     auth_service: IAuthService = Depends(get_auth_service),
 ) -> SimpleOutput:
     
