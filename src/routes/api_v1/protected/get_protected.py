@@ -19,7 +19,7 @@ from routes.depends.external_api_services_depend import get_auth_service, get_pr
         **ResponseMessage.HTTP_500_INTERNAL_SERVER_ERROR("Internal server error"),
     }
 )
-async def register_user(
+async def get_protected_resource(
     protected_resource_service: IProtectedResourceService = Depends(get_protected_resource_service),
     auth_service: IAuthService = Depends(get_auth_service),
     auth_repo: IAuthRepo = Depends(get_auth_repo),
