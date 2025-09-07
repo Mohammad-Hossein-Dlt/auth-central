@@ -35,7 +35,7 @@ In this layer, the application infrastructure is defined, such as:
   - tasks that should be run on startup or shutdown,
   - implement some states based on settings loaded from .env in main app to have access them throughout the entire project
 - Application settings load from the `.env` file
-  - load whith pydantic_settings
+  - load with pydantic_settings
 - Services for interacting with external APIs
   - include interfaces and their implementation
 - Errors related to this layer and other layers
