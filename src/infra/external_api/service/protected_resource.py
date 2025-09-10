@@ -10,6 +10,7 @@ class ProtectedResourceService(IProtectedResourceService):
         self,
         base_url: str,
     ):
+        
         self.base_url = base_url
     
     def get_protected_resource(

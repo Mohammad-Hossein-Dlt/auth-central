@@ -8,12 +8,20 @@ from infra.exception.exceptions import AuthenticationException, EntityNotFoundEr
 
 class GetProtectedResource:
     
-    def __init__(self, protected_service: IProtectedResourceService, auth_service: IAuthService, auth_repo: IAuthRepo):
+    def __init__(
+        self,
+        protected_service: IProtectedResourceService,
+        auth_service: IAuthService,
+        auth_repo: IAuthRepo,
+    ):
+        
         self.protected_resource_service = protected_service
         self.refresh_token_usecase = RefreshToken(auth_service, auth_repo)
         self.auth_repo = auth_repo
         
-    def execute(self) -> SimpleOutput:
+    def execute(
+        self,
+    ) -> SimpleOutput:
         
         is_token_refreshed = False
         

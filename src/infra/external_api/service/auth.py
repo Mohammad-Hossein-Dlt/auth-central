@@ -12,6 +12,7 @@ class AuthService(IAuthService):
         self,
         base_url: str,
     ):
+        
         self.base_url = base_url
     
     def register_user(
@@ -37,8 +38,6 @@ class AuthService(IAuthService):
         self,
         user_data: UserLoginInput,
     ) -> dict:
-        
-        print("///")
         
         target_url = self.base_url + "/login"
         

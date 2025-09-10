@@ -21,7 +21,10 @@ class AuthCredentials(BaseModel):
     )
     
     @model_validator(mode='before')
-    def __set_default_expiry(cls, values: dict) -> dict:
+    def __set_default_expiry(
+        cls,
+        values: dict,
+    ) -> dict:
         
         now: datetime = datetime.now(timezone.utc)
         
@@ -33,17 +36,25 @@ class AuthCredentials(BaseModel):
             
         return values
     
-    def set_new_expiries(self) -> bool:        
+    def set_new_expiries(
+        self,
+    ) -> bool:        
         
         now: datetime = datetime.now(timezone.utc)
         
         self.access_expiry = now + timedelta(minutes=self.access_lifetime)
         self.refresh_expiry = now + timedelta(minutes=self.refresh_lifetime)
     
-    def is_access_valid(self) -> bool:
+    def is_access_valid(
+        self,
+    ) -> bool:
+        
         now = datetime.now(timezone.utc)
         return now.time() < self.access_expiry.time()
     
-    def is_refresh_valid(self) -> bool:
+    def is_refresh_valid(
+        self,
+    ) -> bool:
+    
         now = datetime.now(timezone.utc)
         return now.time() < self.refresh_expiry.time()

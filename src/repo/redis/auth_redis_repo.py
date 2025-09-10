@@ -6,12 +6,21 @@ import uuid
 
 class AuthRedisRepo(IAuthRepo):
     
-    def __init__(self, request: Request, response: Response, redis_client: Redis):
+    def __init__(
+        self,
+        request: Request,
+        response: Response,
+        redis_client: Redis,
+    ):
+        
         self.request = request
         self.response = response   
         self.redis_client = redis_client
         
-    def save_user_auth_credentials(self, credentials: AuthCredentials) -> AuthCredentials:
+    def save_user_auth_credentials(
+        self,
+        credentials: AuthCredentials,
+    ) -> AuthCredentials:
                 
         device_id = None
         
@@ -42,7 +51,9 @@ class AuthRedisRepo(IAuthRepo):
                                 
         return credentials
 
-    def get_user_auth_credentials(self) -> AuthCredentials | None:
+    def get_user_auth_credentials(
+        self,
+    ) -> AuthCredentials | None:
         
         device_id = self.request.session.get("device_id")
                 

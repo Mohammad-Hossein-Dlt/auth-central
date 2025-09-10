@@ -2,15 +2,22 @@ from infra.external_api.interface.Iauth import IAuthService
 from repo.interface.Iauth import IAuthRepo
 from domain.schemas.auth.auth_credentials import AuthCredentials
 from infra.exception.exceptions import TokenExpiredException, OperationFailureException
-from datetime import datetime, timezone, timedelta
 
 class RefreshToken:
     
-    def __init__(self, auth_service: IAuthService, auth_repo: IAuthRepo):
+    def __init__(
+        self,
+        auth_service: IAuthService,
+        auth_repo: IAuthRepo,
+    ):
+        
         self.auth_service = auth_service
         self.auth_repo = auth_repo
         
-    def execute(self, auth_credentials: AuthCredentials) -> AuthCredentials:
+    def execute(
+        self,
+        auth_credentials: AuthCredentials,
+    ) -> AuthCredentials:
         
         if not auth_credentials.is_refresh_valid():
             raise TokenExpiredException(401, "Refresh token expired. Please login again")

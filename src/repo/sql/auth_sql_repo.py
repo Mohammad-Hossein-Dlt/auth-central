@@ -6,12 +6,21 @@ from infra.db.sql.models.user_auth_credentials_model import UserAuthCredentialsM
 
 class AuthSQLRepo(IAuthRepo):
     
-    def __init__(self, request: Request, response: Response, db: Session):
+    def __init__(
+        self,
+        request: Request,
+        response: Response,
+        db: Session,
+    ):
+        
         self.request = request
         self.response = response   
         self.db = db
         
-    def save_user_auth_credentials(self, credentials: AuthCredentials) -> AuthCredentials:
+    def save_user_auth_credentials(
+        self,
+        credentials: AuthCredentials,
+    ) -> AuthCredentials:
                 
         existing_credentials = self.get_user_auth_credentials()
                 
@@ -28,7 +37,9 @@ class AuthSQLRepo(IAuthRepo):
                 
         return AuthCredentials.model_validate(record, from_attributes=True)
 
-    def get_user_auth_credentials(self) -> AuthCredentials | None:
+    def get_user_auth_credentials(
+        self,
+    ) -> AuthCredentials | None:
         
         device_id = self.request.session.get("device_id")
                 

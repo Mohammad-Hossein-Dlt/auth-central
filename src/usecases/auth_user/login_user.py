@@ -4,15 +4,22 @@ from models.schemas.user.user_login_input import UserLoginInput
 from models.schemas.simple.simple_output import SimpleOutput
 from domain.schemas.auth.auth_credentials import AuthCredentials
 from infra.exception.exceptions import OperationFailureException
-from datetime import datetime, timezone, timedelta
 
 class LoginUser:
     
-    def __init__(self, auth_service: IAuthService, auth_repo: IAuthRepo):
+    def __init__(
+        self,
+        auth_service: IAuthService,
+        auth_repo: IAuthRepo,
+    ):
+        
         self.auth_service = auth_service
         self.auth_repo = auth_repo
         
-    def execute(self, user_data: UserLoginInput) -> SimpleOutput:        
+    def execute(
+        self,
+        user_data: UserLoginInput,
+    ) -> SimpleOutput:        
         
         response = self.auth_service.login_user(user_data)
         

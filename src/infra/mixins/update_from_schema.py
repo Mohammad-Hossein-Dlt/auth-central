@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 
 class UpdateFromSchemaMixin:
+    
     def update_from_schema(
         self,
         schema: BaseModel,
