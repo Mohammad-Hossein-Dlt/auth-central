@@ -15,7 +15,6 @@ AUTH_DB_STACK = "sqlite"
 REDIS_HOST = ""
 REDIS_PORT = 12345
 REDIS_PASSWORD = ""
-
 ```
 
 To Run
