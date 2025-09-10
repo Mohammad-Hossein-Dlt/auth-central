@@ -48,7 +48,7 @@ infra/
 │   ├── redis/
 │   │   └── <files or directories...>
 │   │
-│   └── service/
+│   └── sqlite/
 │       └── <files or directories...>
 │
 ├── exception/
