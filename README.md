@@ -5,22 +5,22 @@ ENV File Parameters
 Put it next to the src
 
 ```
-# Base URL of the authentication service
-BASE_URL = "https://auth-central-challange.vercel.app"
+EXTERNAL_FASTAPI_PORT = 80
+INTERNAL_FASTAPI_PORT = 8000
 
-# Database stack to use for token storage: sqlite (development) | redis (production)
-AUTH_DB_STACK = "sqlite"
+BASE_URL = https://auth-central-challange.vercel.app
 
-# Redis configuration (used only if AUTH_DB_STACK = redis)
-REDIS_HOST = ""
-REDIS_PORT = 12345
-REDIS_PASSWORD = ""
+AUTH_DB_STACK = redis # sqlite, redis
+
+REDIS_HOST = redis
+REDIS_PORT = 6379
+REDIS_PASSWORD = redispassword
 ```
 
 To Run
 
 ```
-fastapi dev .\src\main.py
+fastapi dev app/src/main.py
 ```
 
 ## App architecture description
@@ -29,29 +29,46 @@ fastapi dev .\src\main.py
 
 In this layer, the application infrastructure is defined, such as:
 
+- Authentication utilities such as token creation, management, and validation
+
+- Database client and its models (tables)
+
+- Errors related to this layer and other layers
+
+  - include status code and message
+
+- Services for interacting with external APIs
+
+  - include interfaces and their implementation
+
 - Fastapi config such as
+
   - middleware
-  - tasks that should be run on startup or shutdown,
-  - implement some states based on settings loaded from .env in main app to have access them throughout the entire project
+  - tasks that should be run on startup or shutdown, such as create and close database client
+  - implement some states based on settings loaded from .env in main app, to have access them throughout the entire project
+
+- Mixin classes
+
 - Application settings load from the `.env` file
   - load with pydantic_settings
-- Services for interacting with external APIs
-  - include interfaces and their implementation
-- Errors related to this layer and other layers
-  - include status code and message
-- Database and its models (tables)
-- Mixin classes
 
 ```
 infra/
+│
+├── auth/
+│   └── <files or directories...>
+│
 ├── db/
 │   ├── redis/
+│   │   └── <files or directories...>
+│   │
+│   ├── mongodb/
 │   │   └── <files or directories...>
 │   │
 │   └── sqlite/
 │       └── <files or directories...>
 │
-├── exception/
+├── exceptions/
 │   └── <files...>
 │
 ├── external_api/
@@ -77,15 +94,12 @@ In this layer, data models are defined that are only used inside the application
 
 ```
 domain/
+├── mock_data/
+│   └── <files...>
+│
 └── schemas/
-    ├── <schema_group_name>/
-    │   └── <files...>
-    │
-    ├── <schema_group_name>/
-    │   └── <files...>
-    │
     └── <schema_group_name>/
-        └── <files...>
+       └── <files...>
 ```
 
 ### Models Layer
@@ -94,15 +108,13 @@ In this layer, data models are defined that are only used for receiving or sendi
 
 ```
 models/
+├── filter/
+│   └── <files...>
+│
 └── schemas/
-    ├── <schema_group_name>/
-    │   └── <files...>
-    │
-    ├── <schema_group_name>/
-    │   └── <files...>
-    │
     └── <schema_group_name>/
         └── <files...>
+
 ```
 
 ### Repo Layer
@@ -116,6 +128,7 @@ Interfaces define the structure of database communication, so we can have multip
 repo/
 ├── interface/
 │   └── <files...>
+│
 └── <implementation_name>/
     └── <files...>
 ```
@@ -128,8 +141,10 @@ Naming implementations can be based on:
 repo/
 ├── interface/
 │   └── <files...>
+│
 ├── sql/
 │   └── <files...>
+│
 └── nosql/
     └── <files...>
 ```
@@ -140,8 +155,10 @@ repo/
 repo/
 ├── interface/
 │   └── <files...>
+│
 ├── postgresql/
 │   └── <files...>
+│
 └── mongodb/
     └── <files...>
 ```
@@ -173,13 +190,8 @@ routes/
 In this layer, the application’s business logic is defined.
 This layer acts as an important bridge between endpoints in the Routes layer, the database in the Repo layer, and external APIs in the Infra layer.
 
-One of the implementen logics is the token refresh mechanism.
-
 ```
 usecase/
-├── <usecase_group_name>/
-│   └── <files...>
-│
 ├── <usecase_group_name>/
 │   └── <files...>
 │

@@ -1,0 +1,30 @@
+services:
+  fastapi:
+    working_dir: /app
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: fastapi_app
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    ports:
+      - "${EXTERNAL_FASTAPI_PORT}:${INTERNAL_FASTAPI_PORT}"
+    command: ["fastapi", "run", "./src/main.py", "--port", "${INTERNAL_FASTAPI_PORT}"]
+
+  redis:
+    image: redis
+    container_name: redis_server
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
+
+volumes:
+  redis_data:
