@@ -5,6 +5,9 @@ class Settings(BaseSettings):
     EXTERNAL_FASTAPI_PORT: int
     INTERNAL_FASTAPI_PORT: int
     
+    ACCESS_TOKEN_LIFETIME: int
+    REFRESH_TOKEN_LIFETIME: int
+    
     BASE_URL: str
     
     AUTH_DB_STACK: str

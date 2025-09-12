@@ -29,7 +29,7 @@ class RefreshToken:
         auth_credentials.access_token = access_token        
         auth_credentials.refresh_token = refresh_token
         
-        auth_credentials.set_new_expiries()
+        auth_credentials.set_new_lifetime()
         
         try:
             return self.auth_repo.save_user_auth_credentials(auth_credentials)

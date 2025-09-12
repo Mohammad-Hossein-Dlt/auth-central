@@ -12,8 +12,8 @@ class AuthCredentials(BaseModel):
     refresh_expiry: datetime | None = None
     token_type: str | None = None
     
-    access_lifetime: ClassVar[int] = 2  # in minutes
-    refresh_lifetime: ClassVar[int] = 4  # in minutes
+    access_lifetime: ClassVar[int] = 2      # in minutes
+    refresh_lifetime: ClassVar[int] = 4     # in minutes
     
     
     model_config = ConfigDict(
@@ -36,7 +36,7 @@ class AuthCredentials(BaseModel):
             
         return values
     
-    def set_new_expiries(
+    def set_new_lifetime(
         self,
     ) -> bool:        
         

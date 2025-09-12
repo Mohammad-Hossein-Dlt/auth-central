@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from app.src.infra.settings.settings import settings
 from app.src.infra.db.redis.client import init_redis_client
 from app.src.infra.db.sql.database import init_sqlite_client, create_sqlite_db
+from app.src.domain.schemas.auth.auth_credentials import AuthCredentials
 from .app_state import AppStates, set_app_state
 
 
@@ -29,7 +30,10 @@ async def lifespan(app: FastAPI):
     set_app_state(app, AppStates.INTERNAL_FASTAPI_PORT, settings.INTERNAL_FASTAPI_PORT)
     
     set_app_state(app, AppStates.AUTH_BASE_URL, settings.BASE_URL)
-        
+    
+    AuthCredentials.access_lifetime = settings.ACCESS_TOKEN_LIFETIME
+    AuthCredentials.refresh_lifetime = settings.REFRESH_TOKEN_LIFETIME
+
     yield
     
     sql_client.close()

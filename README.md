@@ -8,6 +8,9 @@ Put it next to the src
 EXTERNAL_FASTAPI_PORT = 80
 INTERNAL_FASTAPI_PORT = 8000
 
+ACCESS_TOKEN_LIFETIME = 2
+REFRESH_TOKEN_LIFETIME = 4
+
 BASE_URL = https://auth-central-challange.vercel.app
 
 AUTH_DB_STACK = redis # sqlite, redis
