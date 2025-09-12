@@ -50,11 +50,11 @@ class AuthCredentials(BaseModel):
     ) -> bool:
         
         now = datetime.now(timezone.utc)
-        return now.time() < self.access_expiry.time()
+        return now < self.access_expiry.astimezone(timezone.utc)
     
     def is_refresh_valid(
         self,
     ) -> bool:
     
         now = datetime.now(timezone.utc)
-        return now.time() < self.refresh_expiry.time()
+        return now < self.refresh_expiry.astimezone(timezone.utc)
