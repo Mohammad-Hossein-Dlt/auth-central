@@ -27,6 +27,7 @@ async def lifespan(app: FastAPI):
         
     set_app_state(app, AppStates.EXTERNAL_FASTAPI_PORT, settings.EXTERNAL_FASTAPI_PORT)
     set_app_state(app, AppStates.INTERNAL_FASTAPI_PORT, settings.INTERNAL_FASTAPI_PORT)
+    
     set_app_state(app, AppStates.AUTH_BASE_URL, settings.BASE_URL)
         
     yield
