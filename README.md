@@ -2,7 +2,7 @@
 
 ENV File Parameters
 
-Put it next to the src
+Put it next to the app
 
 ```
 EXTERNAL_FASTAPI_PORT = 80
