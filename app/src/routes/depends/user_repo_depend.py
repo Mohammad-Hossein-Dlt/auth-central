@@ -13,7 +13,7 @@ def get_auth_repo(
     response: Response,
 ) -> IAuthRepo:
     
-    auth_db_client: Redis | Session = get_app_state(app, AppStates.AUTH_DB_CLIENT.value)
+    auth_db_client: Redis | Session = get_app_state(app, AppStates.AUTH_DB_CLIENT)
     
     if isinstance(auth_db_client, Session):
         return AuthSQLRepo(request, response, auth_db_client)
